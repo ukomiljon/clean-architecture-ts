@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -33,7 +34,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx", "src/app/store/cart.ts"
   ],
   "exclude": [
     "node_modules"
