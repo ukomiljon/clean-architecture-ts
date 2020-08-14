@@ -3,8 +3,10 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
  
 import { Cart, Product } from '../../domain/entities';
-import CartRepository from '../../domain/repositories/cartRepository';
+ 
 import { lazyInject } from '../../inversify.config';
+
+import CartUseCase from '../../domain/use.cases/cart.usecase'
 
 export interface CartState {
   items: Cart[];
@@ -22,8 +24,8 @@ export interface AddProductToCartPayload {
 export class CartStore extends VuexModule implements CartState {
   public items: Cart[] = [];
 
-  @lazyInject("CartRepository")
-  private cartRepository!: CartRepository;
+  @lazyInject("CartUseCase")
+  private cartUseCase!: CartUseCase;
 
   get totalCartItem(): number {
     return this.items.reduce((acc, cart) => acc + cart.quantity, 0);
@@ -53,7 +55,7 @@ export class CartStore extends VuexModule implements CartState {
 
   @Action
   async addProductToCart({ product, quantity }: AddProductToCartPayload) {
-    await this.cartRepository.addItemToCart(product, quantity).toPromise();
+    await this.cartUseCase.addItemToCart(product, quantity).toPromise();
     this.addItem({
       product: product,
       quantity: quantity
@@ -62,7 +64,7 @@ export class CartStore extends VuexModule implements CartState {
 
   @Action
   async checkout() {
-    await this.cartRepository.checkout().toPromise();
+    await this.cartUseCase.checkout().toPromise();
     this.clearCart()
   }
 }

@@ -7,12 +7,11 @@ import { Cart, Product } from '../../domain/entities';
 import CartRepository from '../../domain/repositories/cartRepository';
 
 @injectable()
-export   class CartRepositoryImpl implements CartRepository {
+export default class CartRepositoryImpl implements CartRepository {
 
     private _carts: Cart[] = [];
 
-    public getAll(): Observable<Cart[]> {
-        
+    public getAll(): Observable<Cart[]> {        
         return of(null).pipe(
             map(() => this._carts)
         )

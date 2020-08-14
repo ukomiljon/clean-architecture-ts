@@ -22,7 +22,7 @@ export class CartUseCaseImpl implements CartUseCase {
     ) {
     }
     addItemToCart(product: Product, quantity: number): Observable<void> {
-        throw new Error('Method not implemented.');
+        return this.cartRepository.addItemToCart(product, quantity);
     }
     getAll(): Observable<Cart[]> {
         return this.cartRepository.getAll()
@@ -32,7 +32,7 @@ export class CartUseCaseImpl implements CartUseCase {
     }
     getTotalCarts(): Observable<number> {
         return this.cartRepository.getTotalCarts()
-    } 
+    }
 }
 
 

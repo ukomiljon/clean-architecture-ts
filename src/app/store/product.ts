@@ -1,12 +1,11 @@
 
 
 import { Product } from '../../domain/entities';
+import ProductUseCase from '../../domain/use.cases/product.usecase'
 
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { lazyInject } from '../../inversify.config';
-import ProductRepository from '../../domain/repositories/productRepository';
-
-
+ 
 export interface ProductState {
   items: Product[];
 }
@@ -18,8 +17,8 @@ export interface ProductState {
 export class ProductStore extends VuexModule implements ProductState {
   public items: Product[] = [];
 
-  @lazyInject("ProductRepository")
-  private productRepository!: ProductRepository;
+  @lazyInject("ProductUseCase")
+  private productUseCase!: ProductUseCase;
 
   @Mutation
   setItems(items: Product[]) {
@@ -28,15 +27,7 @@ export class ProductStore extends VuexModule implements ProductState {
 
   @Action
   async fetchItems() {
-    const list = await this.productRepository.getAll().toPromise();
+    const list = await this.productUseCase.getAll().toPromise();
     this.setItems(list);
-  }
-
-
-  @Action
-  async productInStock(product: any) {
-    const value: boolean = await this.productRepository.isProductInStock(product).toPromise()
-    return value
-  }
-
+  } 
 }

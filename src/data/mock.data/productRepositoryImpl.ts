@@ -8,7 +8,7 @@ import ProductRepository from '../../domain/repositories/productRepository';
 import { getRandomInt, randomIntFromInterval } from '../../libs/randomNumbers';
 
 @injectable()
-export   class ProductRepositoryImpl implements ProductRepository {
+export default class ProductRepositoryImpl implements ProductRepository {
     readonly _products: Product[];
 
     constructor() {
