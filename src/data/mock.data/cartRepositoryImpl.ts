@@ -1,5 +1,4 @@
-import { Observable } from "rxjs";
-import { of } from 'rxjs/observable/of'
+import { Observable, of } from "rxjs"; 
 import { tap, map } from "rxjs/operators";
 import { injectable } from "inversify";
  
