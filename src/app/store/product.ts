@@ -31,4 +31,12 @@ export class ProductStore extends VuexModule implements ProductState {
     const list = await this.productRepository.getAll().toPromise();
     this.setItems(list);
   }
+
+
+  @Action
+  async productInStock(product: any) {
+    const value: boolean = await this.productRepository.isProductInStock(product).toPromise()
+    return value
+  }
+
 }

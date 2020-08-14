@@ -3,12 +3,19 @@
     <v-card-text>
       <v-img height="200" :src="product.thumbnailUrl" />
 
-      <p class="mt-6 mb-0 title success--text">{{ product.name }}</p>
+      <p class="mt-6 mb-0 title success--text">
+        {{ product.inventory }} - {{ product.name }}
+      </p>
 
       <p class="pink--text body-1">${{ product.price.toLocaleString() }}</p>
       <p>{{ product.description }}</p>
 
-      <v-btn block color="success" @click="addToCart" :loading="loading"
+      <v-btn
+        block
+        color="success"
+        @click="addToCart"
+        :loading="loading"
+        :disabled="!(product.inventory>0)"
         >Add to cart</v-btn
       >
     </v-card-text>
@@ -17,6 +24,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { CartStore } from "../store/cart";
+import { ProductStore } from "../store/product";
+
 import { getModule } from "vuex-module-decorators";
 import { Component, Prop } from "vue-property-decorator";
 import { Product } from "../../domain/entities";
@@ -31,6 +40,10 @@ export default class ProductComponent extends Vue {
     return getModule(CartStore, this.$store);
   }
 
+  get productStore(): ProductStore {
+    return getModule(ProductStore, this.$store);
+  }
+ 
   addToCart() {
     this.loading = true;
     this.cartStore
